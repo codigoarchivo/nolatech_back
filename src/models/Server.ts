@@ -4,6 +4,8 @@ import cors from 'cors';
 import db from '../db/connection';
 // routes
 import routes_auth from '../routes/authRoutes'
+import routes_user from '../routes/userRoutes'
+import routes_upload from '../routes/uploadRoutes'
 
 class Server {
   private app: Application;
@@ -53,6 +55,8 @@ class Server {
 
   private routes() {
     this.app.use(this.pathNames.base, routes_auth);
+    this.app.use(this.pathNames.base, routes_user);
+    this.app.use(this.pathNames.base, routes_upload);
   }
 
   public start() {
