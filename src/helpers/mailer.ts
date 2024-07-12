@@ -18,7 +18,7 @@ const mailer = async (email: string) => {
 
     const token = jwt.signToken({ email, expiresIn: '1h' });
 
-    const link = `/activation/${token}`;
+    const link = `${process.env.LINK_EMAIL}/activation/${token}`;
 
     const mailOptions = {
       from: process.env.MAILER_EMAIL,

@@ -26,7 +26,7 @@ const validatePasswordRepeat = (password, { req }) => {
     }
     return password === req.body.password_repeat;
 };
-const passwordCompare = (password_1, _a) => __awaiter(void 0, [password_1, _a], void 0, function* (password, { req }) {
+const passwordCompare = (password, { req }) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.body;
     const user = yield User_1.default.findOne({ where: { email } });
     if (!user) {

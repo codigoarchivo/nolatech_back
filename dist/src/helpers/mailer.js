@@ -28,7 +28,7 @@ const mailer = (email) => __awaiter(void 0, void 0, void 0, function* () {
             },
         });
         const token = jwt_1.default.signToken({ email, expiresIn: '1h' });
-        const link = `/activation/${token}`;
+        const link = `${process.env.LINK_EMAIL}/activation/${token}`;
         const mailOptions = {
             from: process.env.MAILER_EMAIL,
             to: email,

@@ -20,7 +20,7 @@ const userImageCloudinary = (req, res) => __awaiter(void 0, void 0, void 0, func
     try {
         const user = req.body;
         const tempFilePath = req.files.file.tempFilePath;
-        const folder = "nolatech";
+        const folder = 'nolatech';
         // Clear Previous Images
         yield clearPreviousImage(user.profile_image, folder);
         // Resize the image
@@ -30,24 +30,24 @@ const userImageCloudinary = (req, res) => __awaiter(void 0, void 0, void 0, func
         // Delete the temporary image file
         deleteTempImage(tempFilePath);
         return res.status(200).json({
-            msg: "Image uploaded successfully",
+            msg: 'Image uploaded successfully',
             image: imageUrl,
         });
     }
     catch (error) {
-        console.error("Error uploading image:", error);
-        return res.status(500).json({ msg: "Internal Server Error" });
+        console.error('Error uploading image:', error);
+        return res.status(500).json({ msg: 'Internal Server Error' });
     }
 });
 const clearPreviousImage = (oldImage, folder) => __awaiter(void 0, void 0, void 0, function* () {
     if (oldImage) {
-        const nombreArr = oldImage.split("/");
-        const [public_id] = nombreArr[nombreArr.length - 1].split(".");
+        const nombreArr = oldImage.split('/');
+        const [public_id] = nombreArr[nombreArr.length - 1].split('.');
         yield cloudinary_1.v2.uploader.destroy(`${folder}/${public_id}`);
     }
 });
 const uploadImage = (resizedImageBuffer, folder) => __awaiter(void 0, void 0, void 0, function* () {
-    const tempImagePath = path_1.default.join(__dirname, "temp-profile_image.jpg");
+    const tempImagePath = path_1.default.join(__dirname, 'temp-profile_image.jpg');
     const [, result] = yield Promise.all([
         (0, sharp_1.default)(resizedImageBuffer).toFile(tempImagePath),
         cloudinary_1.v2.uploader.upload(tempImagePath, { folder: folder }),
@@ -65,7 +65,7 @@ const resizeImage = (imageBuffer, sizeX, sizeY) => __awaiter(void 0, void 0, voi
         return resizedImageBuffer;
     }
     catch (error) {
-        console.error("Error resizing image:", error);
+        console.error('Error resizing image:', error);
         throw error; // Propagate the error
     }
 });
