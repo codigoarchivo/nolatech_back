@@ -1,15 +1,17 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import auth from '../controllers/authController';
 import validatePassword from '../helpers/validatePassword';
-import { validateFields } from '../middlewares/validateFields';
 import { limiter } from '../helpers/rateLimit ';
-import { validateToken } from '../helpers/validateToken';
+import validate  from '../helpers/validateToken';
+import { validateFields } from '../middlewares/validateFields';
+import { validateJWT } from '../middlewares/authMiddleware';
+// controllers
+import auth from "../controllers/authController";
 
 const router = Router();
 
 router.post(
-  '/users',
+  '/users/',
   [
     limiter,
     check('first_name', 'First Name is required').notEmpty(),
@@ -68,7 +70,7 @@ router.post(
     check('token', 'Token is required')
       .notEmpty()
       .isJWT()
-      .custom(validateToken),
+      .custom(validate.validateToken),
     validateFields,
   ],
   auth.activation
@@ -77,10 +79,11 @@ router.post(
 router.post(
   '/jwt/refresh/',
   [
-    check('token', 'Token is required')
+    validateJWT,
+    check('refresh', 'Token is required')
       .notEmpty()
       .isJWT()
-      .custom(validateToken),
+      .custom(validate.validateRefresh),
     validateFields,
   ],
   auth.refreshTokens
