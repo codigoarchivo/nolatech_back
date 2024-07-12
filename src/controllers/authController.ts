@@ -53,11 +53,10 @@ const loginUser = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
+    // verify status
     if (!user.get().is_active) {
       return res.status(403).json({ msg: 'User is not active' });
     }
-
     // Verify the password
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
@@ -123,25 +122,18 @@ const activation = async (req: Request, res: Response) => {
 
 const refreshTokens = async (req: Request, res: Response) => {
   try {
-    const { id } = req.body.user;
-
-    // Input validation
-    if (!id) {
-      return res.status(400).json({ message: 'User ID not provided' });
-    }
-    // Find the user by ID
-    const user = await User.findByPk(id);
+    const user = req.body.user;
     if (!user) {
       return res.status(403).json({ message: 'User not found' });
     }
     // Generate a JWT token
     const token = jwt.infoToken({
-      first_name: user.get().first_name,
-      last_name: user.get().last_name,
-      profile_image: user.get().profile_image,
-      is_admin: user.get().is_admin,
-      email: user.get().email,
-      id: user.get().id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      profile_image: user.profile_image,
+      is_admin: user.is_admin,
+      email: user.email,
+      id: user.id,
     });
 
     const accessToken = token.accessToken;
