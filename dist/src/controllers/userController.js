@@ -16,14 +16,14 @@ const sequelize_1 = require("sequelize");
 const User_1 = __importDefault(require("../models/User"));
 const usersGet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { page = 1, count = 10 } = req.query;
-    const { search = "", create = "DESC" } = req.query;
+    const { search = '', create = 'DESC' } = req.query;
     try {
         // Query the database
         const userResults = yield User_1.default.findAndCountAll({
             limit: Number(count),
             offset: (Number(page) - 1) * Number(count),
-            order: [["created_at", `${create}`]],
-            attributes: { exclude: ["password"] },
+            order: [['created_at', `${create}`]],
+            attributes: { exclude: ['password'] },
             where: {
                 [sequelize_1.Op.or]: [
                     {
@@ -53,8 +53,8 @@ const usersGet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        console.error("Error querying database:", error);
-        return res.status(500).json({ message: "Internal server error" });
+        console.error('Error querying database:', error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 });
 const userGet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -62,17 +62,17 @@ const userGet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { id } = req.params;
         // Find the user by ID
         const foundUser = yield User_1.default.findByPk(id, {
-            attributes: { exclude: ["password"] },
+            attributes: { exclude: ['password'] },
         });
         if (!foundUser) {
-            return res.status(403).json({ message: "User not found" });
+            return res.status(403).json({ message: 'User not found' });
         }
         // Return user data
         return res.status(200).json({ user: foundUser.get() });
     }
     catch (error) {
-        console.error("Error retrieving user data:", error);
-        return res.status(500).json({ message: "Internal server error" });
+        console.error('Error retrieving user data:', error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 });
 const userPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -82,18 +82,18 @@ const userPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Check if the user exists before trying to update it
         const existingUser = yield User_1.default.findByPk(id);
         if (!existingUser) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ message: 'User not found' });
         }
         // Update user fields
         yield existingUser.update(updatedFields);
         return res.status(200).json({
-            msg: "User changes were made correctly",
+            msg: 'User changes were made correctly',
         });
     }
     catch (error) {
-        console.error("Error updating user:", error);
+        console.error('Error updating user:', error);
         return res.status(500).json({
-            msg: "Internal server error",
+            msg: 'Internal server error',
         });
     }
 });
@@ -103,18 +103,18 @@ const userDelete = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         // Check if the user exists before trying to update it
         const existingUser = yield User_1.default.findByPk(id);
         if (!existingUser) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ message: 'User not found' });
         }
         // Deactivate the user (instead of removing them completely)
         yield existingUser.update({ is_active: false });
         return res.status(200).json({
-            msg: "The user was deactivated successfully",
+            msg: 'The user was deactivated successfully',
         });
     }
     catch (error) {
-        console.error("Error deactivating user:", error);
+        console.error('Error deactivating user:', error);
         return res.status(500).json({
-            msg: "Internal server error",
+            msg: 'Internal server error',
         });
     }
 });

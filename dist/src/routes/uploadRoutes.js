@@ -5,16 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const express_validator_1 = require("express-validator");
+const uploadController_1 = __importDefault(require("../controllers/uploadController"));
 const authMiddleware_1 = require("../middlewares/authMiddleware");
 const validateFields_1 = require("../middlewares/validateFields");
-const uploadController_1 = __importDefault(require("../controllers/uploadController"));
 const rateLimit_1 = require("../helpers/rateLimit ");
 const router = (0, express_1.Router)();
 // Path to upload profile image
-router.put("/upload/", [
+router.put('/upload/', [
     rateLimit_1.limiter,
     authMiddleware_1.validateJWT,
-    (0, express_validator_1.check)("profile_image"),
+    (0, express_validator_1.check)('profile_image'),
     validateFields_1.validateFields,
 ], uploadController_1.default // Driver to upload image to Cloudinary
 );
