@@ -7,15 +7,15 @@ const validatePassword = (password: string, { req }: Request) => {
     throw new Error('User / The passwords do not match - password');
   }
 
-  return password === req.body.password;
+  return password === req.body.password_repeat;
 };
 
-const validatePasswordRepeat = (password: string, { req }: Request) => {
-  if (password !== req.body.password) {
+const validatePasswordRepeat = (password_repeat: string, { req }: Request) => {
+  if (password_repeat !== req.body.password) {
     throw new Error('User / The passwords do not match - password_repeat');
   }
 
-  return password === req.body.password_repeat;
+  return password_repeat === req.body.password;
 };
 
 const passwordCompare = async (password: string, { req }: Request) => {
