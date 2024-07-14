@@ -9,9 +9,10 @@ dotenv_1.default.config();
 const db = new sequelize_1.Sequelize(`${process.env.POSTGRES_DATABASE}`, `${process.env.POSTGRES_USER}`, `${process.env.POSTGRES_PASSWORD}`, {
     host: process.env.POSTGRES_HOST,
     dialect: 'postgres',
-    dialectOptions: {
-        ssl: process.env.DB_ENABLE_SSL,
-    },
+    // dialectOptions: {
+    //   ssl: (process.env as { DB_ENABLE_SSL: boolean | undefined }).DB_ENABLE_SSL ,
+    // },
+    port: 5433,
     pool: {
         max: 15,
         min: 5,

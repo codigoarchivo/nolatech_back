@@ -45,6 +45,7 @@ const uploadImage = async (resizedImageBuffer: Buffer,  folder: string) => {
     cloudinary.uploader.upload(tempImagePath, { folder: folder }),
   ]);
 
+  console.log('URL de la imagen en Cloudinary:', result.secure_url);
   return result.secure_url;
 };
 

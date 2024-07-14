@@ -19,7 +19,7 @@ router.patch(
     validateJWT,
     check('first_name', 'First Name is required').notEmpty(),
     check('last_name', 'Last Name is required').notEmpty(),
-    check('profile_image', 'Image is required').isEmpty(),
+    check('profile_image', 'Image is required'),
     validateFields,
   ],
   user.userPatch
