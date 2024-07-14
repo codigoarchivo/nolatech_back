@@ -18,15 +18,15 @@ const validatePassword = (password, { req }) => {
     if (password !== req.body.password_repeat) {
         throw new Error('User / The passwords do not match - password');
     }
-    return password === req.body.password;
-};
-const validatePasswordRepeat = (password, { req }) => {
-    if (password !== req.body.password) {
-        throw new Error('User / The passwords do not match - password_repeat');
-    }
     return password === req.body.password_repeat;
 };
-const passwordCompare = (password, { req }) => __awaiter(void 0, void 0, void 0, function* () {
+const validatePasswordRepeat = (password_repeat, { req }) => {
+    if (password_repeat !== req.body.password) {
+        throw new Error('User / The passwords do not match - password_repeat');
+    }
+    return password_repeat === req.body.password;
+};
+const passwordCompare = (password_1, _a) => __awaiter(void 0, [password_1, _a], void 0, function* (password, { req }) {
     const { email } = req.body;
     const user = yield User_1.default.findOne({ where: { email } });
     if (!user) {

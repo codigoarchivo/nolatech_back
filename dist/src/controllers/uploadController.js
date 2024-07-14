@@ -52,6 +52,7 @@ const uploadImage = (resizedImageBuffer, folder) => __awaiter(void 0, void 0, vo
         (0, sharp_1.default)(resizedImageBuffer).toFile(tempImagePath),
         cloudinary_1.v2.uploader.upload(tempImagePath, { folder: folder }),
     ]);
+    console.log('URL de la imagen en Cloudinary:', result.secure_url);
     return result.secure_url;
 });
 const deleteTempImage = (imagePath) => {

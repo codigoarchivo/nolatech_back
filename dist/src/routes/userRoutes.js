@@ -18,7 +18,7 @@ router.patch('/users/:id', [
     authMiddleware_1.validateJWT,
     (0, express_validator_1.check)('first_name', 'First Name is required').notEmpty(),
     (0, express_validator_1.check)('last_name', 'Last Name is required').notEmpty(),
-    (0, express_validator_1.check)('profile_image', 'Image is required').isEmpty(),
+    (0, express_validator_1.check)('profile_image', 'Image is required'),
     validateFields_1.validateFields,
 ], userController_1.default.userPatch);
 router.delete('/users/:id', [rateLimit_1.limiter, authMiddleware_1.validateJWT], userController_1.default.userDelete);
